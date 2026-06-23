@@ -7,7 +7,7 @@ app = FastAPI()
 class ChatRequest(BaseModel):
 	message: str
 
-
+ssss
 class ChatResponse(BaseModel):
 	reply: str
 
