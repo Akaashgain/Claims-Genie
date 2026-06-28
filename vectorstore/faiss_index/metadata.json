@@ -1,0 +1,23 @@
+[
+  {
+    "id": 0,
+    "document_type": "salary",
+    "source": "salary_sample.pdf",
+    "page": 1,
+    "chunk": "Company: Acme Corp Employee: John Doe Pay Period: June 2026 Gross Pay: $5,000 Net Pay: $4,00"
+  },
+  {
+    "id": 1,
+    "document_type": "bank",
+    "source": "bank_sample.pdf",
+    "page": 1,
+    "chunk": "Bank: Acme Bank Account: 123456789 Statement Period: June 2026 Opening Balance: $10,000 Clos"
+  },
+  {
+    "id": 2,
+    "document_type": "offer",
+    "source": "offer_sample.pdf",
+    "page": 1,
+    "chunk": "Offer Letter Candidate: John Doe Position: Software Engineer Base Salary: $120,000 Start Date: July"
+  }
+]

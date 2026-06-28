@@ -1,62 +1,78 @@
-# Claims Genie
+# Agentic Document Assistant
 
-Claims Genie is a FastAPI service that generates short-term disability (STD) and long-term disability (LTD) claim letters using Claude or AWS Bedrock.
+Workflow:
 
-## Features
+```text
+User Question
+  -> LangGraph Agent
+  -> Planner
+  -> Salary / Bank / Offer Letter Tool
+  -> FAISS Search
+  -> Gemini 2.5 Flash
+  -> Final Answer
+```
 
-- FastAPI endpoint for generating claim letters
-- Two prompt templates: STD and LTD
-- Backend provider selection: `claude` or `bedrock`
-- Easy environment-based configuration
+## Stack
+
+- FastAPI for the backend API
+- Streamlit for the UI
+- LangGraph for agent orchestration
+- Gemini 2.5 Flash for final answer generation
+- FAISS for vector search
+- BAAI/bge-small-en-v1.5 embeddings
+- PyMuPDF for PDF extraction
+- SQLite for chunk metadata
+
+## Folder Structure
+
+```text
+agentic-doc-assistant/
+├── app.py
+├── main.py
+├── agents/
+├── tools/
+├── documents/
+│   ├── salary/
+│   ├── bank/
+│   └── offer/
+├── vectorstore/
+│   └── faiss_index/
+├── embeddings/
+├── llm/
+├── data/
+└── requirements.txt
+```
 
 ## Setup
-
-1. Create a virtual environment and activate it.
-2. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Set required environment variables:
+Set your Gemini API key:
 
-- `CLAUDE_API_KEY`
-- `BEDROCK_REGION` (optional, defaults to `us-east-1`)
-- `BEDROCK_MODEL_ID` (optional, defaults to `anthropic.claude-3`)
-- `DEFAULT_PROVIDER` (optional, `claude` or `bedrock`)
+```bash
+$env:GEMINI_API_KEY="your-api-key"
+```
+
+Add PDFs to:
+
+- `documents/salary`
+- `documents/bank`
+- `documents/offer`
 
 ## Run
 
+Start the API:
+
 ```bash
-uvicorn app:app --reload
+uvicorn main:app --reload
 ```
 
-## API
+Start the UI in another terminal:
 
-### POST /generate-letter
-
-Request body:
-
-```json
-{
-  "claim_number": "12345",
-  "claim_type": "std",
-  "claim_notes": "Patient is expected to be out for 6 weeks due to recovery...",
-  "provider": "claude"
-}
+```bash
+streamlit run app.py
 ```
 
-Response:
-
-```json
-{
-  "claim_number": "12345",
-  "claim_type": "std",
-  "provider": "claude",
-  "letter": "...generated letter text..."
-}
-```
-
-### GET /health
-
-Returns service health and default provider.
+Open the Streamlit app, click **Rebuild FAISS index**, then ask questions.
