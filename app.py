@@ -1,8 +1,11 @@
+import os
+
 import requests
 import streamlit as st
 
 
-API_URL = "http://localhost:8000"
+API_URL = os.getenv("API_URL") or st.secrets.get("API_URL", "http://localhost:8000")
+API_URL = API_URL.rstrip("/")
 
 
 st.set_page_config(page_title="Agentic Document Assistant", page_icon="A", layout="wide")
